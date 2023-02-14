@@ -229,7 +229,7 @@ function Post(props) {
   let filetype = data.mediatype
   let avat;
   if (data.profile) {
-    avat = data.profile.replace("/reactapp/src/uploads/profile/", "");
+    avat = data.profile
   }
   let primecheck = false;
   for (let i = 0; i < data.prime.length; i++) {
@@ -294,7 +294,7 @@ function Post(props) {
                       handleOth(e, data.userid, data.username, data.profile)
                     }
                     sx={{ bgcolor: red[500] }}
-                    src={require(`../uploads/profile/${avat}`)}
+                    src={avat}
                     aria-label="recipe"
                   ></Avatar>
                 }
@@ -717,7 +717,7 @@ function Post(props) {
                                   height: "15px",
                                   width: "15px",
                                 }}
-                                src={require(`../uploads/profile/${comimage}`)}
+                                src={avat}
                               />
                               <span>{obj.name}</span>
                             </Stack>

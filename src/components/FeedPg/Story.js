@@ -53,16 +53,6 @@ function Story(props) {
       {arr.map((obj) => {
         let req = obj.file
         let filetype = obj.mediatype;
-        // if (
-        //   getExtension(name).toLowerCase() === "jpg" ||
-        //   getExtension(name).toLowerCase() === "png" ||
-        //   getExtension(name).toLowerCase() === "bmp" ||
-        //   getExtension(name).toLowerCase() === "jpeg"
-        // ) {
-        //   filetype = "image";
-        // } else {
-        //   filetype = "video";
-        // }
         testar.push({ url: req, type: filetype });
       })}
 
