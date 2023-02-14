@@ -320,7 +320,7 @@ export default function SimpleContainer() {
                                   borderColor: "#2b2b2b",
                                 }}
                                 alt="Travis Howard"
-                                // src={require(`../uploads/profile/${profile}`)}
+                          
                                 onClick={() => {
                                   handleCurrentStory(user.user_id, ownStory.id);
                                 }}
@@ -366,7 +366,7 @@ export default function SimpleContainer() {
                                   borderColor: "#2b2b2b",
                                 }}
                                 alt="Travis Howard"
-                                // src={require(`../uploads/profile/${profile}`)}
+              
                                 onClick={() => {
                                   handleCurrentStory(user.user_id, ownStory.id);
                                 }}

@@ -41,8 +41,8 @@ function StoryView() {
   return (<>
   
   {arr.map((obj)=>{
-    let name = obj.file.replace('/reactapp/src/uploads/story/','')
-    testar.push(require("../uploads/story/"+name))
+    let name = obj.file
+    testar.push(name)
   })}
 
 

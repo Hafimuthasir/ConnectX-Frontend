@@ -11,7 +11,6 @@ import ProfilePage from './ProfilePage'
 import ExplorePage from './ExplorePage';
 import AlertModal from "../components/AlertSuccess"
 
-
 function HomePage() {
   
   // function TestHandler(){

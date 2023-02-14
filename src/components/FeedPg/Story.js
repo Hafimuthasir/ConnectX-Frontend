@@ -20,14 +20,6 @@ function Story(props) {
   }, []);
 
   console.log("ddddddddd", resp);
-  
-  // const stories = [
-  //   "https://picsum.photos/id/237/200/300",
-  //   "https://picsum.photos/id/237/200/300",
-  //   "https://picsum.photos/id/237/200/300",
-  //   require("../../uploads/story/5990443986068_Z7twYaM.jpg"),
-  //   require("../../uploads/posts/secone.jpg"),
-  // ];
 
   function getExtension(filename) {
     return filename.split(".").pop();
