@@ -63,7 +63,7 @@ useEffect(() => {
         
     // })
 
-    socketRef.current = new WebSocket(`ws://localhost:8000/ws/chat/${currentRoom}/${user.user_id}/`);
+    socketRef.current = new WebSocket(`ws://grapicscard.ga/ws/chat/${currentRoom}/${user.user_id}/`);
 
     socketRef.current.onmessage = (event) => {
         testdat = JSON.parse(event.data)

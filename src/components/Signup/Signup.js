@@ -101,7 +101,7 @@ const theme = createTheme();
         formData.append('profile',profile)
         formData.append('bio',bio)
 
-        axios.post('http://localhost:8000/api/register',formData).then((response)=>{
+        axios.post('https://grapicscard.ga/api/register',formData).then((response)=>{
       console.log('response',response.data);
       if (response.status===200){
         handleOpen()
