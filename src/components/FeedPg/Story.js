@@ -37,7 +37,6 @@ function Story(props) {
       }else{
         setOwnStoryWatched (false)
       }
-      console.log('jojojo',response.data)
     });
     
   };

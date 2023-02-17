@@ -16,7 +16,6 @@ function LoginPage() {
 
  useEffect(() => {
   if (user != null) {
-    console.log('helloe');
     navigate('/home')
  }
  }, [])

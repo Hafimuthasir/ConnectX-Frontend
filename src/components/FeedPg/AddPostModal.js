@@ -121,7 +121,7 @@ export default function BasicModal() {
     }
     var dat = { file, caption, userid };
     axios
-      .post("http://localhost:8000/api/uploadPost", formData, {
+      .post("uploadPost", formData, {
         onUploadProgress: (data) => {
           setProgress(Math.round((100 * data.loaded) / data.total));
         },

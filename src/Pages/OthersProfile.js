@@ -63,7 +63,6 @@ export default function SimpleContainer() {
     setQnbt("outlined");
     details = { section: "all" };
     axios.post(`getUserPosts/${user.user_id}`, details).then((response) => {
-      console.log("0000000000", response.data);
       setUserbio(response.data[0].bio);
       setPosts(response.data);
     });

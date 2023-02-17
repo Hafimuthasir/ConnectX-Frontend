@@ -27,7 +27,7 @@ function HomePage() {
     } = useContext(AppBarContext)
 
   const getusername = () => {
-    axios.get('http://localhost:8000/api/userhome').then((response)=>{
+    axios.get('https://grapicscard.ga/api/userhome').then((response)=>{
         console.log('lol',response.data)
     })
 }

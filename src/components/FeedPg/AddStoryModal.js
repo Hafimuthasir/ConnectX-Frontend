@@ -121,7 +121,7 @@ export default function BasicModal(props) {
     formData.append("userid", userid);
 
     axios
-      .post("http://localhost:8000/api/uploadStory", formData, {
+      .post("uploadStory", formData, {
         onUploadProgress: (data) => {
           setProgress(Math.round((100 * data.loaded) / data.total));
         },

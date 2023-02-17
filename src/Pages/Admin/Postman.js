@@ -8,7 +8,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
 import { useState } from "react";
-import axios from "axios";
+import adaxios from "../../axios/adminAxios";
 import { useEffect } from "react";
 import FormControl from "@mui/material/FormControl";
 import FormHelperText from "@mui/material/FormHelperText";
@@ -51,12 +51,12 @@ export default function BasicTable() {
   console.log("hello");
   const getPostdata = () => {
 
-    axios.get("http://localhost:8000/api/feedPost").then((response) => {
+    adaxios.get("feedPost").then((response) => {
       setAllpost(response.data);
       console.log(response.data);
     });
 
-    axios.get("http://localhost:8000/api2/getpostreports").then((response) => {
+    adaxios.get("getpostreports").then((response) => {
       setPostreports(response.data);
       console.log('6767676767676',response.data);
     });
@@ -75,8 +75,8 @@ export default function BasicTable() {
 
 
   function removePost(id) {
-    axios
-      .delete(`http://localhost:8000/api2/removepost/${id}`)
+    adaxios
+      .delete(`removepost/${id}`)
       .then((response) => {
         console.log("response", response.data);
         getPostdata();
@@ -84,8 +84,8 @@ export default function BasicTable() {
   }
 
   const IgnoreReport = (id) => {
-    axios
-    .delete(`http://localhost:8000/api2/ignorepost/${id}`)
+    adaxios
+    .delete(`ignorepost/${id}`)
     .then((response) => {
       console.log("response", response.data);
       getPostdata();

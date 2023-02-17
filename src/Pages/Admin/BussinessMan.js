@@ -99,7 +99,6 @@ export default function BasicTable() {
       baseURL: `edituser`,
     });
     pass.put(`/${userId}`, datas).then((response) => {
-      console.log("lol", response.data);
       getuser();
       // handleClose();
     });
@@ -107,14 +106,12 @@ export default function BasicTable() {
 
   function deleteuser(id) {
     adaxios.delete(`removebussreq/${id}`).then((response) => {
-      console.log("response", response.data);
       getuser();
     });
   }
 
   function acceptuser(id) {
     adaxios.get(`acceptbussreq/${id}`).then((response) => {
-      console.log("hollllllllaaaa", response.data);
       getuser();
     });
   }

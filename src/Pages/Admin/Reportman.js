@@ -8,7 +8,8 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
 import { useState } from 'react';
-import axios from '../../axios/adminAxios';
+import adaxios from '../../axios/adminAxios';
+import axios from 'axios'
 import { useEffect } from 'react';
 import FormControl from '@mui/material/FormControl';
 import  FormHelperText from '@mui/material/FormHelperText';
@@ -47,7 +48,6 @@ export default function BasicTable() {
     const [users,setUsers] = useState([]);
     const [search,setSearch]=useState('');
     const [res,setRes]=useState([users]);
-    console.log('hello');
 
     const getpostreports = () => {
         console.log('hollo');
@@ -58,7 +58,7 @@ export default function BasicTable() {
         }
 
         axios.get('getpostreports').then((response)=>{
-            console.log('lol',response.data)
+
             setUsers(response.data);
         })
     }
@@ -69,10 +69,8 @@ export default function BasicTable() {
         setSearch(e.target.value)
         let sr = users.filter(obj=>obj.first_name.toLowerCase().includes(search))
         setRes(sr)
-        console.log('ff',sr)
+
         
-
-
     }
     useEffect(()=>{
         getpostreports()
@@ -102,7 +100,7 @@ export default function BasicTable() {
         e.preventDefault()
         const datas = {first_name,last_name,email,userId}
         const pass = axios.create({
-            baseURL:`http://localhost:8000/api2/edituser`
+            baseURL:`https://grapicscard.ga/api2/edituser`
         })
         pass.put(`/${userId}`,datas).then((response)=>{
             console.log('lol',response.data)
@@ -112,7 +110,7 @@ export default function BasicTable() {
     }
 
     function deleteuser(id){
-        axios.post(`http://localhost:8000/api2/deleteuser/${id}`).then((response)=>{
+        axios.post(`https://grapicscard.ga/api2/deleteuser/${id}`).then((response)=>{
             console.log('response',response.data);
             getpostreports()
         })
