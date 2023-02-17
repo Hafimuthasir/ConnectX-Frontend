@@ -19,7 +19,7 @@ function Verification() {
  const verify = ()=>{
     let item = {id:id,username:username}
     console.log('ver',item)
-    axios.post("http://localhost:8000/api/emailvalidate",item).then((response)=>{
+    axios.post("https://grapicscard.ga/api/emailvalidate",item).then((response)=>{
         console.log('verifuuuu',response.data)
         setVerified(response.data)
     })
