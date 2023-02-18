@@ -139,7 +139,7 @@ function Post(props) {
     let filename = file.replace("/reactapp/src/uploads/zpostfile/", "");
     console.log(filename);
     axios({
-      url: `DownloadFile/${filename}`,
+      url: `DownloadFile/${id}`,
       method: "GET",
       responseType: "blob",
       filename,
