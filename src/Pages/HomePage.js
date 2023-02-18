@@ -3,7 +3,7 @@ import {useEffect} from 'react'
 import axios from 'axios';
 import PrimarySearchBar from '../components/Navbar/Navbar'
 import SimpleBottomNavigation from '../components/BtAppbar/BtAppBar';
-import ChatPage from './ChatPage'
+import ChatPage from './ChatPageOrg'
 import { useContext } from 'react';
 import { AppBarContext } from '../contexts/AppBarContext';
 import FeedPage from './FeedPage';
