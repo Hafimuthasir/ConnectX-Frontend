@@ -59,10 +59,11 @@ export default function BasicModal() {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => {
-    setOpen(false);
-    setFile("");
-    setImage(null);
-    setProgress(null)
+    console.log('llll',zfile);
+    // setOpen(false);
+    // setFile("");
+    // setImage(null);
+    // setProgress(null)
   };
 
   const [file, setFile] = React.useState("");
