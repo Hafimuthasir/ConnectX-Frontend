@@ -499,7 +499,7 @@ function Post(props) {
                     src={data.file}
                   ></img>
                 </div>
-                <div>
+                {/* <div>
                   <h3>3</h3>
                 </div>
                 <div>
@@ -510,7 +510,7 @@ function Post(props) {
                 </div>
                 <div>
                   <h3>6</h3>
-                </div>
+                </div> */}
               </Slider>
             ) : (
               <CardMedia
