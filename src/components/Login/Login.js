@@ -22,6 +22,7 @@ import Alert from "@mui/material/Alert";
 import iLogin from "../../images/iLogin.jpg";
 import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
 import MemoryIcon from "@mui/icons-material/Memory";
+import { apibaseUrl } from "../../constants/constants";
 
 import { motion } from "framer-motion";
 
@@ -81,7 +82,7 @@ export default function Login() {
     e.preventDefault();
     let details = { email, password };
 
-    let response = await fetch("https://grapicscard.ga/api/token", {
+    let response = await fetch(`${apibaseUrl}token`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
