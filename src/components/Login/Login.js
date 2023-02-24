@@ -251,6 +251,9 @@ export default function Login() {
           <Typography id="modal-modal-description" color='grey' variant='h5' sx={{ mt: 2 }}>
             A link is send to your email.verify your email by clicking on the link to login
           </Typography>
+          <Typography id="modal-modal-description" color='grey' variant='h5' sx={{ mt: 2 }}>
+              Already Verified ?&nbsp;<a style={{color:"#4b4bff"}} onClick={()=>{handleClose();setError('')}}>Click here to Login again</a>
+          </Typography>
         </Box>
       </Modal>
     </div>

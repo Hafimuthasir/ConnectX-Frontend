@@ -12,6 +12,7 @@ import {
   ListItemText,
   Divider,
 } from "@mui/material";
+
 import TextField, { getTextFieldUtilityClass } from "@mui/material/TextField";
 // import Input from '@mui/joy/Input';
 import Avatar from "@mui/material/Avatar";
@@ -115,7 +116,7 @@ export default function SimpleContainer() {
   const getFeed = (e) => {
     axios.get("feedPost").then((response) => {
       setFeedPost(response.data);
-      console.log("555555555555555", response.data);
+      // console.log("555555555555555", response.data);
     });
   };
 
@@ -124,6 +125,7 @@ export default function SimpleContainer() {
       setStory(response.data);
     });
   };
+
 
   React.useEffect(() => {
     getFeed();
@@ -235,8 +237,8 @@ export default function SimpleContainer() {
           }}
         >
           <br></br>
-          <Typography className="text-center text-slate-300">
-            Trending In Python
+          <Typography className="text-center text-slate-300" sx={{fontSize:"15px"}}>
+            Recent Chats
           </Typography>
           <br></br>
           <SuggestedFriends type="trendpost" />
@@ -246,7 +248,7 @@ export default function SimpleContainer() {
         <div>scsdcsc</div>
         <div>scsdcsc</div> */}
 
-        <Container className="min-[820px]:!w-[682px]">
+        <Container sx={{minWidth:"45%"}} className="min-[820px]:!w-[682px]">
           <Box sx={{ height: "100vh" }}>
             <Grid sx={{ width: "100%" }}>
               <br></br>
@@ -750,10 +752,10 @@ export default function SimpleContainer() {
               ) : (
                 <Stack sx={{ width: "96%", marginLeft: "10px" }}>
                   {feedPost.map((item) => {
-                    return <Post key={item.id} data={item} />;
+                    return <Post feedCall={getFeed} key={item.id} data={item} />;
                   })}
 
-                  <br></br>
+                  <br></br><br></br><br></br><br></br><br></br>
                 </Stack>
               )}
             </Grid>
@@ -789,7 +791,7 @@ export default function SimpleContainer() {
         >
           <br></br>
 
-          <Typography className="text-center text-slate-300">
+          <Typography className="text-center text-slate-300" sx={{fontSize:"15px"}}>
             Most Downloaded Files for You
           </Typography>
 

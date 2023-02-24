@@ -3,11 +3,9 @@
   import axios from 'axios';
   import { useNavigate } from 'react-router-dom';
   import ButtonAppBar from '../Navbar/Navbar';
-  import Alert from '@mui/material/Alert';
-
-
+  import * as React from 'react';
+import Alert from '@mui/material/Alert';
 import MemoryIcon from '@mui/icons-material/Memory';
-import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -102,7 +100,6 @@ const theme = createTheme();
         formData.append('bio',bio)
 
         axios.post('https://grapicscard.ga/api/register',formData).then((response)=>{
-      console.log('response',response.data);
       if (response.status===200){
         handleOpen()
       }

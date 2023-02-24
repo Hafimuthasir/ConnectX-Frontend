@@ -12,9 +12,9 @@ import {
   CssBaseline,
   Container,
   Popover,
-  Chip
+  Chip,
 } from "@mui/material";
-import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
+import BusinessCenterIcon from "@mui/icons-material/BusinessCenter";
 import { AuthContext } from "../contexts/AuthContext";
 import axios from "../axios/axios";
 import adaxios from "../axios/adminAxios";
@@ -23,7 +23,6 @@ import EditProfileModal from "../components/ProfilePg/EditProfileModal";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import Post from "../components/Post";
 import { useNavigate } from "react-router-dom";
-
 
 const style = {
   position: "absolute",
@@ -49,7 +48,7 @@ export default function SimpleContainer() {
     setAnchorEl(null);
   };
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const openPop = Boolean(anchorEl);
   const id = openPop ? "simple-popover" : undefined;
@@ -116,14 +115,11 @@ export default function SimpleContainer() {
     });
   };
 
-  let { user,setUser,setAuthTokens } = React.useContext(AuthContext);
-
+  let { user, setUser, setAuthTokens } = React.useContext(AuthContext);
 
   const handleBusReq = () => {
-    adaxios.put("bussinessReq/" + user.user_id).then((response) => {
-    });
+    adaxios.put("bussinessReq/" + user.user_id).then((response) => {});
   };
-
 
   const [followers, setFollowers] = React.useState([]);
   const [following, setFollowing] = React.useState([]);
@@ -154,14 +150,13 @@ export default function SimpleContainer() {
     setOpen(true);
   };
 
-
-  const  logoutHandler = () => {
-    console.log('teet');
+  const logoutHandler = () => {
+    console.log("teet");
     setAuthTokens(null);
     setUser(null);
     localStorage.removeItem("authTokens");
     navigate("/");
-  }
+  };
 
   const handleClose = () => setOpen(false);
 
@@ -211,7 +206,6 @@ export default function SimpleContainer() {
                 "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
             }}
           >
-            
             <Stack direction="row" className="h-16" spacing={2}>
               {user.profile ? (
                 <Avatar
@@ -236,8 +230,13 @@ export default function SimpleContainer() {
                 <p style={{ marginTop: "25%" }}>{userbio}</p>
                 <br></br>
                 <Stack
-                  
-                  sx={{ mt: "65%", height: "5rem", width: "10rem",display:"flex",alignItems:"center" }}
+                  sx={{
+                    mt: "65%",
+                    height: "5rem",
+                    width: "10rem",
+                    display: "flex",
+                    alignItems: "center",
+                  }}
                   direction="row"
                 >
                   {/* <Button sx={{mt:3}} variant="contained" onClick={handleuse}>Edit Profile</Button> */}
@@ -263,7 +262,19 @@ export default function SimpleContainer() {
                         More
                       </Button>
                     ) : (
-                      <span><Chip sx={{ml:1,height:"2rem",maxWidth:"8rem"}} avatar={<Avatar alt="Natacha" ><BusinessCenterIcon/></Avatar>} size="small" label="Bussiness" color="secondary" /></span>
+                      <span>
+                        <Chip
+                          sx={{ ml: 1, height: "2rem", maxWidth: "8rem" }}
+                          avatar={
+                            <Avatar alt="Natacha">
+                              <BusinessCenterIcon />
+                            </Avatar>
+                          }
+                          size="small"
+                          label="Bussiness"
+                          color="secondary"
+                        />
+                      </span>
                     )}
 
                     <Popover
@@ -351,6 +362,7 @@ export default function SimpleContainer() {
               sx={{ pt: 2 }}
             >
               <Button
+                className="w-28 h-10 text-xs sm:w-44 sm:h-10"
                 variant={photoBt}
                 color="error"
                 sx={{ mr: 1 }}
@@ -358,17 +370,26 @@ export default function SimpleContainer() {
               >
                 Photos/Videos
               </Button>
-              <Button variant={modBt} color="secondary" onClick={handleModbt}>
+              <Button
+                className="w-28 h-10 text-xs sm:w-44 sm:h-10"
+                variant={modBt}
+                color="secondary"
+                onClick={handleModbt}
+              >
                 Files
               </Button>
               &nbsp;&nbsp;
-              <Button variant={qnBt} onClick={handleQnbt}>
+              <Button
+                className="w-28 h-10 text-xs sm:w-44 sm:h-10"
+                variant={qnBt}
+                onClick={handleQnbt}
+              >
                 Premium
                 <StarIcon sx={{ pb: 0.3, color: "#ffbf00" }} />
               </Button>
-
               <span style={{ marginLeft: "2vw" }}>
                 <Button
+                  className="w-28 h-10 text-xs sm:w-44 sm:h-10"
                   color="warning"
                   variant={PurchaseBt}
                   onClick={handlePurchasebt}
@@ -377,10 +398,17 @@ export default function SimpleContainer() {
                     className="text-zinc-400"
                     sx={{ pb: 0.3 }}
                   />
-                  My Purchases
+                  <span
+                    style={{
+                      "@media only screen and (max-width: 640px)": {
+                        fontSize: "14px !important",
+                      },
+                    }}
+                  >
+                    Purchases
+                  </span>
                 </Button>
               </span>
-
             </Stack>
             <br></br>
 
@@ -407,7 +435,7 @@ export default function SimpleContainer() {
                         >
                           {filetype === "image" ? (
                             <img
-                              style={{height:"100%"}}
+                              style={{ height: "100%" }}
                               // className="h-10 sm:h-5"
                               // src={`${obj.img}?w=164&h=164&fit=crop&auto=format`}
                               src={obj.file}
@@ -428,7 +456,7 @@ export default function SimpleContainer() {
                 ) : (
                   <>
                     {posts.map((obj) => {
-                      let filetype = obj.mediatype
+                      let filetype = obj.mediatype;
                       return (
                         <ImageListItem
                           onClick={() => {

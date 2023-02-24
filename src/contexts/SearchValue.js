@@ -21,6 +21,7 @@ export default function SearchProvider({ children }) {
   const [ownStoryWatched, setOwnStoryWatched] = React.useState("");
   const [errorMsg, setErrorMsg] = React.useState("");
   const [story, setStory] = React.useState([]);
+  const [ispurchased, setIsPurschased] = React.useState(false);
 
   return (
     <SearchContext.Provider

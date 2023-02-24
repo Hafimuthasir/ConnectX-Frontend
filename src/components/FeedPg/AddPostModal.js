@@ -47,7 +47,6 @@ export default function BasicModal() {
   let { user } = React.useContext(AuthContext);
   let { setFeedPost, setPostbool, setOpenAlert, setErrorAlert, setErrorMsg } =
     React.useContext(SearchContext);
-
   const [age, setAge] = React.useState("");
 
   const [progress, setProgress] = React.useState();
@@ -63,16 +62,31 @@ export default function BasicModal() {
     setOpen(false);
     setFile("");
     setImage(null);
-    setProgress(null)
+    setFile2("");
+    setImage2(null);
+    setFile3("");
+    setImage3(null);
+    setFile("");
+    setImage(null);
+    setProgress(null);
+    setIsprime("");
+    setIsz(false);
   };
 
   const [file, setFile] = React.useState("");
   const [mediaType, setMediaType] = React.useState("");
 
   const [file2, setFile2] = React.useState("");
+  const [mediaType2, setMediaType2] = React.useState("");
+
   const [file3, setFile3] = React.useState("");
+  const [mediaType3, setMediaType3] = React.useState("");
+
   // post input hiding config
   const hiddenFileInput = React.useRef(null);
+  const hiddenFileInput2 = React.useRef(null);
+  const hiddenFileInput3 = React.useRef(null);
+
   const hiddenZFileInput = React.useRef(null);
 
   const [caption, setCap] = React.useState();
@@ -86,6 +100,8 @@ export default function BasicModal() {
   const [dprice, setDprice] = React.useState();
 
   const [image, setImage] = React.useState(null);
+  const [image2, setImage2] = React.useState(null);
+  const [image3, setImage3] = React.useState(null);
 
   const getFeed = (e) => {
     axios.get("feedPost").then((response) => {
@@ -105,7 +121,13 @@ export default function BasicModal() {
 
     const formData = new FormData();
     formData.append("file", file);
-    formData.append('mediatype',mediaType)
+    formData.append("file2", file2);
+    formData.append("file3", file3);
+
+    formData.append("mediatype", mediaType);
+    formData.append("mediatype2", mediaType2);
+    formData.append("mediatype3", mediaType3);
+
     formData.append("caption", caption);
     formData.append("userid", userid);
     formData.append("repo", repo);
@@ -133,6 +155,7 @@ export default function BasicModal() {
           setFile("");
           setImage(null);
           getFeed();
+          setIsprime("");
         }
       })
       .catch((error) => {
@@ -149,9 +172,32 @@ export default function BasicModal() {
       0,
       e.target.files[0].type.lastIndexOf("/")
     );
-    
+
     setImage({ image: URL.createObjectURL(e.target.files[0]) });
-    setMediaType(mediatype)
+    setMediaType(mediatype);
+  };
+
+  const handleplus2 = (e) => {
+    setFile2(e.target.files[0]);
+    let mediatype = e.target.files[0].type.substr(
+      0,
+      e.target.files[0].type.lastIndexOf("/")
+    );
+
+    setImage2({ image: URL.createObjectURL(e.target.files[0]) });
+    setMediaType2(mediatype);
+  };
+
+  const handleplus3 = (e) => {
+    console.log('bt33333',e.target.files[0]);
+    setFile3(e.target.files[0]);
+    let mediatype = e.target.files[0].type.substr(
+      0,
+      e.target.files[0].type.lastIndexOf("/")
+    );
+
+    setImage3({ image: URL.createObjectURL(e.target.files[0]) });
+    setMediaType3(mediatype);
   };
 
   const handleZplus = (e) => {
@@ -165,13 +211,16 @@ export default function BasicModal() {
   const handleClick = (event) => {
     hiddenFileInput.current.click();
   };
+  const handleClick2 = (event) => {
+    hiddenFileInput2.current.click();
+  };
+  const handleClick3 = (event) => {
+    hiddenFileInput3.current.click();
+  };
+
   const handleZClick = (event) => {
     hiddenZFileInput.current.click();
   };
-
-  // React.useEffect(() => {
-
-  // }, [file])
 
   return (
     <div>
@@ -236,7 +285,7 @@ export default function BasicModal() {
               <Stack direction="row" spacing={0.5}>
                 {image == null ? (
                   <div onClick={handleClick}>
-                    <UploadFileBt name="Upload Photo 1" />
+                    <UploadFileBt name="Upload Media 1" />
                   </div>
                 ) : (
                   <img
@@ -244,7 +293,30 @@ export default function BasicModal() {
                     src={image.image}
                   />
                 )}
-                {file ? <UploadFileBt name="Add More" /> : ""}
+
+                {image2 == null ? (
+                  <div onClick={handleClick2}>
+                    <UploadFileBt name="Add More" />
+                  </div>
+                ) : (
+                  <img
+                    style={{ width: 80, heigth: 63, objectFit: "fill" }}
+                    src={image2.image}
+                  />
+                )}
+
+                {image3 == null ? (
+                  <div onClick={handleClick3}>
+                    <UploadFileBt name="Add More" />
+                  </div>
+                ) : (
+                  <img
+                    style={{ width: 80, heigth: 63, objectFit: "fill" }}
+                    src={image3.image}
+                  />
+                )}
+
+                {/* {file ? <div><UploadFileBt name="Add More" /></div> : ""} */}
               </Stack>
               <TextField
                 id="outlined-basic"
@@ -281,14 +353,22 @@ export default function BasicModal() {
                       variant="outlined"
                     />
                   </Stack>
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        onChange={(e) => setIsprime(e.target.checked)}
-                      />
-                    }
-                    label="is Premiuim"
-                  />
+
+                  {user.is_bussiness === true ? (
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          onChange={(e) => setIsprime(e.target.checked)}
+                        />
+                      }
+                      label="is Premiuim"
+                    />
+                  ) : (
+                    <Typography sx={{ mt: 1, color: "#df9c22" }}>
+                      You need bussiness access to upload premium files*{" "}
+                      <a style={{ color: "#6d6dd5" }}>Learn more</a>
+                    </Typography>
+                  )}
                 </div>
               ) : (
                 ""
@@ -321,6 +401,22 @@ export default function BasicModal() {
                 style={{ display: "none" }}
                 onChange={handleplus}
                 name="file"
+              ></input>
+
+              <input
+                type="file"
+                ref={hiddenFileInput2}
+                style={{ display: "none" }}
+                onChange={handleplus2}
+                name="file2"
+              ></input>
+
+              <input
+                type="file"
+                ref={hiddenFileInput3}
+                style={{ display: "none" }}
+                onChange={handleplus3}
+                name="file3"
               ></input>
 
               <input

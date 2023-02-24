@@ -21,6 +21,10 @@ import Post from "../../components/Post";
 import { DataObjectRounded } from "@mui/icons-material";
 import DownloadIcon from "@mui/icons-material/Download";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
+import {ListItemButton} from "@mui/material";
+import { SearchContext } from "../../contexts/SearchValue";
+import { AppBarContext } from "../../contexts/AppBarContext";
+import { useNavigate } from "react-router-dom";
 
 const style = {
   position: "absolute",
@@ -47,6 +51,13 @@ export default function AlignItemsList(props) {
     setOpen(true);
   };
 
+  let { setChatcol, setFeedcol, setQnscol, setProfilecol } =
+    React.useContext(AppBarContext);
+  let { setChatUser, setShowChat, setFullChat, fullchat, setChatdp } =
+    React.useContext(SearchContext);
+
+  const navigate = useNavigate();
+
   const handleClose = () => setOpen(false);
 
   const downloadFile = (file, id) => {
@@ -71,17 +82,51 @@ export default function AlignItemsList(props) {
     axios.post("addDownloadsCount", details).then((response) => {});
   };
 
+  
+  const [chatlist, setChatlist] = React.useState([]);
+  const getChatlist = ()=>{
+  axios.get("chat/getchatlist/" + user.user_id).then((response) => {
+    setChatlist(response.data);
+    console.log("1111111111", response.data);
+  });
+};
+
+
   useEffect(() => {
     if (props.type == "trendpost") {
-      axios.get("GetExplorePosts/trend").then((response) => {
-        setPosts(response.data);
-      });
+      // axios.get("GetExplorePosts/trend").then((response) => {
+      //   setPosts(response.data);
+      // });
+
+      getChatlist()
     } else {
       axios.get("GetTrendingDownloads").then((response) => {
         setPosts(response.data);
       });
     }
   }, []);
+
+  const handleChatPage = (second_userid,second_username) => {
+    let details = {
+      primary_user: user.user_id,
+      secondary_user: second_userid,
+    };
+    axios.post("chat/getchats", details).then((response) => {
+      setFullChat(response.data);
+      console.log("8888888", response.data);
+      setChatcol("#850f0f");
+      setFeedcol("mintcream");
+      setProfilecol("mintcream");
+      setQnscol("mintcream");
+      setChatUser(second_username);
+      setShowChat(true);
+      // setChatProfile(dp)
+
+      navigate("/home");
+
+      // setChatUser(loc.state.username)
+    });
+  };
 
   return (
     <>
@@ -92,17 +137,94 @@ export default function AlignItemsList(props) {
           container
           sx={{
             display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            gap: "5px",
+            // justifyContent: "center",
+            // alignItems: "center",
+            gap: "10px",
             columnGap: "4px",
             rowGap: "9px",
             paddingLeft: "9px",
           }}
         >
-          {Posts.map((obj) => {
+          {/* {Posts.map((obj) => {
             return <PostCardSmall type="homeside" data={obj} />;
-          })}
+          })} */}
+       
+          
+
+
+
+
+
+
+
+
+       
+        {chatlist.map((obj, index) => {
+          let chatusername;
+          let chatuserprofile;
+          let chatuserid;
+          let roomid = obj.id;
+          if (obj.primary_user !== user.user_id) {
+            chatusername = obj.primary_username;
+            chatuserprofile = obj.primary_profile;
+            chatuserid = obj.primary_user;
+          } else {
+            chatusername = obj.secondary_username;
+            chatuserprofile = obj.secondary_profile;
+            chatuserid = obj.secondary_user;
+          }
+          return (
+            <>
+            {chatuserid !== user.user_id?
+            <>
+            {/* <Divider color="#333"/> */}
+
+{/* {chatUser === chatusername ? */}
+            <ListItem
+            // className="shadow-md"
+              key={index}
+              onClick={() => {
+                handleChatPage(
+                  chatuserid,chatusername
+                );
+                // setSeleChat(chatusername);
+              }}
+              disablePadding
+            >
+              <ListItemButton>
+                <ListItemIcon>
+                  {/* {index % 2 === 0 ? <InboxIcon sx={{color:"white"}}/> : <MailIcon />} */}
+                  <Avatar alt="Remy Sharp" src={chatuserprofile} />
+                </ListItemIcon>
+                <ListItemText sx={{color:"darkgrey"}} primary={chatusername} />
+              </ListItemButton>
+            </ListItem>
+            
+         
+            
+            
+            {/* <Divider color="#333"/> */}
+            </>
+            :""
+          }
+          </>
+
+          );
+        })}
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
         </Grid>
       ) : (
         <List sx={{ width: "100%", maxWidth: 360 }}>

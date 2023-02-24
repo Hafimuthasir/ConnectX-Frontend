@@ -46,6 +46,10 @@ import Slider from "react-slick";
 import { useState } from "react";
 import ReportModal from "./FeedPg/ReportModal";
 import { SearchContext } from "../contexts/SearchValue";
+import BasicModal from "./PaymentModal";
+import VideoPlayer from "./VideoPlayer";
+
+
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -71,6 +75,7 @@ function Post(props) {
     });
   };
 
+
   const handleClosePop = () => {
     setAnchorElpop(null);
   };
@@ -88,12 +93,12 @@ function Post(props) {
     slidesToScroll: 1,
   };
 
-  let [checkPurchase, setCheckPurchase] = React.useState(false);
+    let [checkPurchase, setCheckPurchase] = React.useState(false);
 
   const navigate = useNavigate();
 
   let { user } = React.useContext(AuthContext);
-  let { setFeedPost,setOpenAlert } = React.useContext(SearchContext)
+  let { setFeedPost,setOpenAlert} = React.useContext(SearchContext)
 
   let profile = "";
   if (user.profile !== "null") {
@@ -103,14 +108,28 @@ function Post(props) {
   const [likebool, setLIkebool] = React.useState(false);
 
   const [expanded, setExpanded] = React.useState(false);
+
   const [comments, setComments] = React.useState(props.data.comment);
 
   const [likeCount, setLikeCount] = React.useState(props.data.likes);
 
   const [com, setCom] = React.useState("");
 
+  const [primecheck,setPrimeCheck] = React.useState(false)
+
+  const handlePrimeTrigger = () =>{
+    setPrimeCheck(true)
+  }
+
   React.useEffect(() => {
     setLIkebool(false);
+    for (let i = 0; i < data.prime.length; i++) {
+      if (data.prime[i].userid === user.user_id) {
+        setPrimeCheck(true);
+        break;
+      }
+    }
+
   }, [likebool, data]);
 
   // Button states
@@ -119,7 +138,11 @@ function Post(props) {
     e.preventDefault();
     let comments = com;
     let det = { comments, postid, userid: user.user_id };
-    axios.post("subComment", det).then((response) => {});
+    axios.post("subComment", det).then((response) => {
+      console.log('iiiiiii',response.data.comment)
+      getFeed()
+      setComments(response.data.comment)
+    });
   };
 
   const handleExpandClick = () => {
@@ -233,13 +256,9 @@ function Post(props) {
   if (data.profile) {
     avat = data.profile
   }
-  let primecheck = false;
-  for (let i = 0; i < data.prime.length; i++) {
-    if (data.prime[i].userid === user.user_id) {
-      primecheck = true;
-      break;
-    }
-  }
+  
+
+ 
 
   let backcol = "#18181B";
 
@@ -271,6 +290,21 @@ function Post(props) {
         setOpenAlert(true)
       });
   };
+
+  // const player = React.useRef(null);
+
+  // React.useEffect(() => {
+  //   player.current = new Plyr('#player', {
+  //     // options here
+  //     controls: ['play', 'progress', 'current-time', 'mute', 'volume', 'settings', 'fullscreen'],
+  //     autoplay: true,
+  //     // loop: { active: true },
+  //     // keyboard: { focused: true, global: true },
+  //     // captions: { active: true, update: true, language: 'en' },
+
+  //   });
+  // }, []);
+
 
   return (
     <div>
@@ -478,65 +512,96 @@ function Post(props) {
                 >
                   {data.created_at}
                 </Moment> */}
-            {filetype === "image" ? (
+                
+            
               <Slider className="slideralign" {...settings}>
                 <div>
                   {data.file ? (
+                    <>
+                    {filetype==='image'?
                     <CardMedia
-                      component="img"
-                      // height="194"
+                      sx={{maxHeight:"300px",objectFit:"scale-down"}}
+                      component='img'
                       src = {data.file}
-                      // image="https://images.unsplash.com/photo-1551963831-b3b1ca40c98e"
                       alt="Paella dish"
                     />
+                    :
+                    <CardMedia
+                      id="player" playsinline controls autoPlay muted
+                      sx={{maxHeight:"350px"}}
+                      component="video"
+                      
+                      src={data.file}
+                    
+                      alt="Paella dish"
+                    />
+
+                    }
+                    </>              
                   ) : (
                     ""
                   )}
                 </div>
 
-                <div>
-                  <img
-                    height="500"
-                    width="600"
-                    src={data.file}
-                  ></img>
-                </div>
-                {/* <div>
-                  <h3>3</h3>
-                </div>
-                <div>
-                  <h3>4</h3>
-                </div>
-                <div>
-                  <h3>5</h3>
-                </div>
-                <div>
-                  <h3>6</h3>
-                </div> */}
+                {data.file2 ? (
+                  <div>
+                   {filetype==='image'?
+                    <CardMedia 
+                    sx={{maxHeight:"350px",objectFit:"scale-down"}}
+                      component='img'
+                      src = {data.file2}
+                      alt="Paella dish"
+                    />
+                    :
+                    <CardMedia
+                      sx={{maxHeight:"400px",objectFit:"scale-down"}}
+                      component="video"
+                      loop
+                      controls
+                      src={data.file2}
+                      autoPlay
+                      muted
+                      alt="Paella dish"
+                    />}
+                    </div>
+                  ) : (
+                    ""
+                  )}
+                
+
+                
+                {data.file3 ? (
+                  <div>
+                    {filetype==='image'?
+                    <CardMedia 
+                    sx={{maxHeight:"350px",objectFit:"scale-down"}}
+                      component='img'
+                      src = {data.file3}
+                      alt="Paella dish"
+                    />
+                    :
+                    <CardMedia
+                      sx={{maxHeight:"400px",objectFit:"scale-down"}}
+                      component="video"
+                      loop
+                      controls
+                      src={data.file3}
+                      autoPlay
+                      muted
+                      alt="Paella dish"
+                    />}
+                    </div>
+                  ) : (
+                    ""
+                  )}
+                
+
               </Slider>
-            ) : (
-              <CardMedia
-                sx={{
-                  maxHeight: "400px",
-                  maxWidth: "100%",
-                  height: "auto",
-                }}
-                component="video"
-                // height="194"
-                loop
-                controls
-                // image={require(`.${item.file}`)}
-                src={data.file}
-                autoPlay
-                muted
-                // image="https://images.unsplash.com/photo-1551963831-b3b1ca40c98e"
-                alt="Paella dish"
-              />
-            )}
+          
 
             <CardContent className="text-zinc-400 bg-zinc-700" sx={{ p: 0.5 }}>
               <Typography variant="body2" color="grey">
-                {data.caption}
+                {data.caption === "undefined"?"":data.caption}
               </Typography>
             </CardContent>
             <CardActions disableSpacing className="bg-zinc-700" sx={{ p: 0 }}>
@@ -576,13 +641,14 @@ function Post(props) {
                 //   let joi = obj.userid
                 //  })
                 primecheck === false && user.user_id != data.userid ? (
-                  <Button
-                    onClick={() => handlePurchase(data.id)}
-                    variant="contained"
-                    color="primary"
-                  >
-                    Purchase
-                  </Button>
+                  // <Button
+                  //   onClick={() => handlePurchase(data.id)}
+                  //   variant="contained"
+                  //   color="primary"
+                  // >
+                  //   Purchase
+                  // </Button>
+                  <BasicModal price={data.price} postid={data.id} primeTrigger={handlePrimeTrigger} feedCall={props.feedCall} userid={user.user_id}/>
                 ) : (
                   <>
                     <Button
@@ -665,7 +731,7 @@ function Post(props) {
                 aria-label="show more"
               >
                 <span className="text-zinc-400" style={{ textAlign: "left" }}>
-                  {comments.length}
+                  {comments&& comments.length}
                 </span>
                 {/* <ExpandMoreIcon /> */}
                 <ForumIcon className="text-zinc-400" />
@@ -688,9 +754,12 @@ function Post(props) {
                 >
                   Post
                 </Button>
-                <h5>Comments</h5>
-                <Grid sx={{ pl: 5 }} direction="row">
-                  {comments.map((obj) => {
+                <br></br>
+                <h3 style={{color:"darkgray",marginTop:"10px",marginBottom:"10px",fontSize:"large"}}>Comments</h3>
+                
+                <Grid sx={{ pl: 5,borderRadius:"10px" ,boxShadow:
+                "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",pt:2,pb:2,maxHeight:"200px",overflow:"auto"}} direction="row">
+                  {comments && comments.map((obj) => {
                     let comimage;
                     if (obj.profile !== null) {
                       comimage = obj.profile.replace(
@@ -701,12 +770,13 @@ function Post(props) {
 
                     return (
                       <>
+                      <Stack direction="row">
                         <Stack
                           sx={{
                             pt: 0.5,
                             bgcolor: "grey",
                             mb: 0.5,
-                            width: "20%",
+                            width: "50%",
                             height: 50,
                             borderRadius: 2,
                             pl: 1,
@@ -737,6 +807,14 @@ function Post(props) {
 
                           <Stack sx={{ pt: 0.5 }}>{obj.comments}</Stack>
                         </Stack>
+
+                        {/* {obj.userid === user.user_id && props.data.userid === user.user_id ?
+                          <Button variant="contained" color="error" sx={{ml:2,mt:1,height:"30px"}}>Remove</Button>
+                          :
+                          <Button variant="contained" color="error" sx={{ml:2,mt:1,height:"30px"}}>Report</Button>
+                          } */}
+
+                        </Stack>
                       </>
                     );
                   })}
@@ -761,6 +839,8 @@ function Post(props) {
         )}
         {/* // </Box> */}
       </Stack>
+
+      
     </div>
   );
 }
