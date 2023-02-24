@@ -3,7 +3,7 @@ import {apibaseUrl} from '../constants/constants';
 
 
 const accessToken = localStorage.getItem('authTokens') ? JSON.parse(localStorage.getItem('authTokens')) : null
-const access = accessToken.access?accessToken.access:null
+const access = accessToken?accessToken.access:null
 // const accessToken = 'ewefeefe123e2132'
 
 const instance = axios.create({
