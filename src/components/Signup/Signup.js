@@ -237,7 +237,7 @@ const theme = createTheme();
               <Grid item xs={12}>
               {error ?
       <Alert variant="filled" severity="error">
-       {error}
+       An error occured...!,Please try again&nbsp;&nbsp;{error}
       </Alert>:''}
               </Grid>
             </Grid>
