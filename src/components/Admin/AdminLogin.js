@@ -17,6 +17,8 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { adminApibaseUrl,apibaseUrl } from "../../constants/constants";
+
 
 function Copyright(props) {
   return (
@@ -54,7 +56,7 @@ export default function Login() {
         //         navigate('/adminhome');
         //     }
         //   })
-        let response = await fetch('http://localhost:8000/api/token',{
+        let response = await fetch(`${apibaseUrl}token`,{
       
           method: 'POST',
           headers: {

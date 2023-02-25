@@ -20,6 +20,7 @@ import Modal from '@mui/material/Modal';
 import ButtonAppBar from '../Navbar/AdNavbar';
 import TextField from '@mui/material/TextField';
 import { Container } from '@mui/material';
+import { adminApibaseUrl } from '../../constants/constants';
 
 // function createData(name, calories, fat, carbs, protein) {
 //   return { name, calories, fat, carbs, protein };
@@ -57,7 +58,7 @@ export default function BasicTable() {
         }
 
         console.log("lll",ath)
-        axios.post('http://localhost:8000/api2/userlist',ath).then((response)=>{
+        axios.post(`${adminApibaseUrl}userlist`,ath).then((response)=>{
             console.log('lol',response.data)
             setUsers(response.data);
             console.log('kk',users);
@@ -103,7 +104,7 @@ export default function BasicTable() {
         e.preventDefault()
         const datas = {first_name,last_name,email,userId}
         const pass = axios.create({
-            baseURL:`http://localhost:8000/api2/edituser`
+            baseURL:`${adminApibaseUrl}edituser`
         })
         pass.put(`/${userId}`,datas).then((response)=>{
             console.log('lol',response.data)
@@ -113,11 +114,18 @@ export default function BasicTable() {
     }
 
     function deleteuser(id){
-        axios.post(`http://localhost:8000/api2/deleteuser/${id}`).then((response)=>{
+        axios.post(`${adminApibaseUrl}deleteuser/${id}`).then((response)=>{
             console.log('response',response.data);
             getuser()
         })
         
+    }
+
+    const emailverifyadmin =(id)=>{
+      axios.post(`${adminApibaseUrl}emailVerifyAdmin/${id}`).then((response)=>{
+        console.log('response',response.data);
+        getuser()
+    })
     }
 //modal settings
     const [open, setOpen] = React.useState(false);
@@ -142,6 +150,7 @@ export default function BasicTable() {
             <TableCell style={{color:'white'}} align="right">Last Name</TableCell>
             <TableCell style={{color:'white'}} align="right">Email&nbsp;</TableCell>
             <TableCell style={{color:'white'}} align="right">Block&nbsp;</TableCell>
+            <TableCell style={{color:'white'}} align="right">Verification&nbsp;</TableCell>
             
           </TableRow>
         </TableHead>{search ? <TableBody>  
@@ -168,6 +177,7 @@ export default function BasicTable() {
                 Delete
             </Button>
                 </TableCell> 
+                
             </TableRow>
           ))}
           
@@ -196,6 +206,15 @@ export default function BasicTable() {
                 UnBlock
             </Button>}
                 </TableCell> 
+
+                <TableCell align="right">
+              {user.is_verified === false?<Button variant="contained" onClick={()=>{emailverifyadmin(user.id)}} color="warning">
+                  Verify
+            </Button>:<Button variant="contained" onClick={()=>{emailverifyadmin(user.id)}} color="success">
+                  Disprove
+            </Button>}
+                </TableCell> 
+
             </TableRow>
           )}
           
