@@ -218,7 +218,7 @@ export default function BasicModal(props) {
 
             <Stack spacing={0.5}>
               <div onClick={handleClick}>
-                <UploadFileBt name="Upload Photo 1" />
+                <UploadFileBt name="Upload Media" />
               </div>
             </Stack>
 

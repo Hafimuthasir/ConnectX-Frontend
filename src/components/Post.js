@@ -98,7 +98,7 @@ function Post(props) {
   const navigate = useNavigate();
 
   let { user } = React.useContext(AuthContext);
-  let { setFeedPost,setOpenAlert} = React.useContext(SearchContext)
+  let { setFeedPost,setSuccessAlert} = React.useContext(SearchContext)
 
   let profile = "";
   if (user.profile !== "null") {
@@ -251,7 +251,7 @@ function Post(props) {
   //   filetype = "vid";
   // }
 
-  let filetype = data.mediatype
+  // let filetype = data.mediatype
   let avat;
   if (data.profile) {
     avat = data.profile
@@ -262,10 +262,11 @@ function Post(props) {
 
   let backcol = "#18181B";
 
-  if (filetype === "video") {
+  if (data.mediatype === "video") {
+    backcol = "#3f3f46";
   } else {
     backcol = "#18181B";
-    backcol = "#3f3f46";
+    
   }
 
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -287,7 +288,7 @@ function Post(props) {
       .delete(`deletepost/${id}`)
       .then((response) => {
         getFeed()
-        setOpenAlert(true)
+        setSuccessAlert(true)
       });
   };
 
@@ -518,9 +519,9 @@ function Post(props) {
                 <div>
                   {data.file ? (
                     <>
-                    {filetype==='image'?
+                    {data.mediatype === 'image'?
                     <CardMedia
-                      sx={{maxHeight:"300px",objectFit:"scale-down"}}
+                      sx={{maxHeight:"390px"}}
                       component='img'
                       src = {data.file}
                       alt="Paella dish"
@@ -528,7 +529,7 @@ function Post(props) {
                     :
                     <CardMedia
                       id="player" playsinline controls autoPlay muted
-                      sx={{maxHeight:"350px"}}
+                      sx={{maxHeight:"390px"}}
                       component="video"
                       
                       src={data.file}
@@ -545,23 +546,22 @@ function Post(props) {
 
                 {data.file2 ? (
                   <div>
-                   {filetype==='image'?
+                   {data.mediatype2==='image'?
                     <CardMedia 
-                    sx={{maxHeight:"350px",objectFit:"scale-down"}}
+                    sx={{maxHeight:"390px"}}
                       component='img'
                       src = {data.file2}
-                      alt="Paella dish"
+                      alt="Paella"
                     />
                     :
                     <CardMedia
-                      sx={{maxHeight:"400px",objectFit:"scale-down"}}
+                      sx={{maxHeight:"390px"}}
                       component="video"
                       loop
                       controls
                       src={data.file2}
                       autoPlay
                       muted
-                      alt="Paella dish"
                     />}
                     </div>
                   ) : (
@@ -572,16 +572,16 @@ function Post(props) {
                 
                 {data.file3 ? (
                   <div>
-                    {filetype==='image'?
+                    {data.mediatype3==='image'?
                     <CardMedia 
-                    sx={{maxHeight:"350px",objectFit:"scale-down"}}
+                    sx={{maxHeight:"390px"}}
                       component='img'
                       src = {data.file3}
                       alt="Paella dish"
                     />
                     :
                     <CardMedia
-                      sx={{maxHeight:"400px",objectFit:"scale-down"}}
+                      sx={{maxHeight:"390px"}}
                       component="video"
                       loop
                       controls

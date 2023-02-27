@@ -2,6 +2,7 @@ import React from 'react'
 import { Box } from '@mui/material'
 import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded'
 import { ProductionQuantityLimitsSharp } from '@mui/icons-material'
+import VideoFileIcon from '@mui/icons-material/VideoFile';
 
 function UploadFileBt(props) {
   const [file,setFile] = React.useState('')
@@ -21,7 +22,13 @@ function UploadFileBt(props) {
               flexDirection: "column",
             }}
             // onClick={handleClick}
-          ><AddCircleRoundedIcon />
+          >
+          {props.name ==="Video Added"?
+          <VideoFileIcon sx={{color:"#960d0d"}}/>
+          :
+          <AddCircleRoundedIcon sx={{color:"#280d96"}} />
+          }
+            
           <p>{props.name}</p>
           </Box>
   )

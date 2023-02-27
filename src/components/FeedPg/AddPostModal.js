@@ -19,6 +19,11 @@ import { getSpaceUntilMaxLength } from "@testing-library/user-event/dist/utils";
 import getFeed from "../../Pages/FeedPage";
 import { useNavigate } from "react-router-dom";
 import { SearchContext } from "../../contexts/SearchValue";
+import ImageCropper from "../CropModal";
+import ChildModal from "../ChildModal"
+import { useEffect,useRef } from "react";
+// import ReactCrop from "react-image-crop";
+// import 'react-image-crop/dist/ReactCrop.css';
 
 const style = {
   display: "flex",
@@ -44,10 +49,52 @@ const style = {
 export default function BasicModal() {
   const navigate = useNavigate();
 
+  let { setFeedPost, setPostbool, setOpenAlert, setErrorAlert, setErrorMsg, croppedImage, setCroppedImage, setOpenCrop } =
+  React.useContext(SearchContext);
+
+  // const isInitialRender = useRef(true);
+
+
+const handleClearCrop =()=>{
+  setWhichCrop(null)
+}
+
+  
+  useEffect(() => {
+    if (croppedImage.img1){
+      console.log('on  1111111')
+      setFile(dataURItoBlob(croppedImage.img1))     
+    }
+
+    if(croppedImage.img2){
+      console.log('on  2222222')
+      setFile2(dataURItoBlob(croppedImage.img2))
+    }
+
+    if(croppedImage.img3){
+      console.log('on  33333333')
+      setFile3(dataURItoBlob(croppedImage.img3))
+    }
+
+  }, [croppedImage])
+
+  const dataURItoBlob = (dataURI) => {
+    if (croppedImage.img1){
+      const byteString = atob(dataURI.split(',')[1]);
+      const ab = new ArrayBuffer(byteString.length);
+      const ia = new Uint8Array(ab);
+      for (let i = 0; i < byteString.length; i++) {
+        ia[i] = byteString.charCodeAt(i);
+      }
+      return new Blob([ab], { type: 'image/png' });
+    }else{
+      return null
+    }
+  };
+
+  
   let { user } = React.useContext(AuthContext);
-  let { setFeedPost, setPostbool, setOpenAlert, setErrorAlert, setErrorMsg } =
-    React.useContext(SearchContext);
-  const [age, setAge] = React.useState("");
+
 
   const [progress, setProgress] = React.useState();
 
@@ -58,21 +105,22 @@ export default function BasicModal() {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => {
-    // console.log('llll',zfile.name);
     setOpen(false);
     setFile("");
     setImage(null);
     setFile2("");
-    setImage2(null);
     setFile3("");
-    setImage3(null);
-    setFile("");
-    setImage(null);
     setProgress(null);
     setIsprime("");
     setIsz(false);
+    setWhichCrop(null)
+    setCroppedImage({})
+    setMediaType("")
+    setMediaType2("")
+    setMediaType3("")
   };
 
+  
   const [file, setFile] = React.useState("");
   const [mediaType, setMediaType] = React.useState("");
 
@@ -100,8 +148,9 @@ export default function BasicModal() {
   const [dprice, setDprice] = React.useState();
 
   const [image, setImage] = React.useState(null);
-  const [image2, setImage2] = React.useState(null);
-  const [image3, setImage3] = React.useState(null);
+
+
+  const [whichCrop,setWhichCrop] = React.useState(null)
 
   const getFeed = (e) => {
     axios.get("feedPost").then((response) => {
@@ -166,39 +215,50 @@ export default function BasicModal() {
       });
   };
 
-  const handleplus = (e) => {
-    setFile(e.target.files[0]);
+  const handleplus = (e,pos) => {
+    setWhichCrop(pos)
+
     let mediatype = e.target.files[0].type.substr(
       0,
       e.target.files[0].type.lastIndexOf("/")
     );
+    
+    if (mediatype === 'image'){
+      
+    if (e.target.files && e.target.files[0]) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        setImage(reader.result);
+      };
+      reader.readAsDataURL(e.target.files[0]);
+      setOpenCrop(true) 
+    }
+  }else{
+    if (pos===1){
+      setFile(e.target.files[0])
+      
+    }else if (pos === 2){
+      setFile2(e.target.files[0])
+      
+    }else {
+      setFile3(e.target.files[0])
+    
+    }
+  }
 
-    setImage({ image: URL.createObjectURL(e.target.files[0]) });
+  if (pos === 1 ){
     setMediaType(mediatype);
-  };
-
-  const handleplus2 = (e) => {
-    setFile2(e.target.files[0]);
-    let mediatype = e.target.files[0].type.substr(
-      0,
-      e.target.files[0].type.lastIndexOf("/")
-    );
-
-    setImage2({ image: URL.createObjectURL(e.target.files[0]) });
+  }else if ( pos === 2 ){
     setMediaType2(mediatype);
-  };
-
-  const handleplus3 = (e) => {
-    console.log('bt33333',e.target.files[0]);
-    setFile3(e.target.files[0]);
-    let mediatype = e.target.files[0].type.substr(
-      0,
-      e.target.files[0].type.lastIndexOf("/")
-    );
-
-    setImage3({ image: URL.createObjectURL(e.target.files[0]) });
+  }else {
     setMediaType3(mediatype);
+  }
+
+
+
   };
+
+
 
   const handleZplus = (e) => {
     setZfile(e.target.files[0]);
@@ -221,6 +281,7 @@ export default function BasicModal() {
   const handleZClick = (event) => {
     hiddenZFileInput.current.click();
   };
+
 
   return (
     <div>
@@ -283,36 +344,40 @@ export default function BasicModal() {
               </Stack>
               <Typography>Upload Photos</Typography>
               <Stack direction="row" spacing={0.5}>
-                {image == null ? (
+                {croppedImage.img1 === null || croppedImage.img1 === undefined ? (
                   <div onClick={handleClick}>
+                    {mediaType === "video"?
+                    <UploadFileBt name="Video Added" />
+                    :
                     <UploadFileBt name="Upload Media 1" />
+                    }
                   </div>
                 ) : (
                   <img
                     style={{ width: 80, heigth: 63, objectFit: "fill" }}
-                    src={image.image}
+                    src={croppedImage.img1}
                   />
                 )}
 
-                {image2 == null ? (
+                {croppedImage.img2 === null || croppedImage.img2 === undefined  ? (
                   <div onClick={handleClick2}>
                     <UploadFileBt name="Add More" />
                   </div>
                 ) : (
                   <img
                     style={{ width: 80, heigth: 63, objectFit: "fill" }}
-                    src={image2.image}
+                    src={croppedImage.img2}
                   />
                 )}
 
-                {image3 == null ? (
+                {croppedImage.img3 === null || croppedImage.img3 === undefined ? (
                   <div onClick={handleClick3}>
                     <UploadFileBt name="Add More" />
                   </div>
                 ) : (
                   <img
                     style={{ width: 80, heigth: 63, objectFit: "fill" }}
-                    src={image3.image}
+                    src={croppedImage.img3}
                   />
                 )}
 
@@ -399,7 +464,7 @@ export default function BasicModal() {
                 type="file"
                 ref={hiddenFileInput}
                 style={{ display: "none" }}
-                onChange={handleplus}
+                onChange={(e)=>handleplus(e,1)}
                 name="file"
               ></input>
 
@@ -407,7 +472,8 @@ export default function BasicModal() {
                 type="file"
                 ref={hiddenFileInput2}
                 style={{ display: "none" }}
-                onChange={handleplus2}
+                // onChange={handleplus2}
+                onChange={(e)=>{handleplus(e,2)}}
                 name="file2"
               ></input>
 
@@ -415,7 +481,7 @@ export default function BasicModal() {
                 type="file"
                 ref={hiddenFileInput3}
                 style={{ display: "none" }}
-                onChange={handleplus3}
+                onChange={(e)=>handleplus(e,3)}
                 name="file3"
               ></input>
 
@@ -455,6 +521,34 @@ export default function BasicModal() {
                 )}
               </Grid>
             </form>
+            {/* <ReactCrop src={file} onImageLoaded={setCropImage} crop={crop} onChange={setCrop}/> */}
+           
+
+            {/* <Button>haaaaaaaaaaai</Button> */}
+
+{
+  whichCrop === 1?
+  <ImageCropper image={image}  pos={1}/>
+  :""}
+
+
+  {
+  whichCrop === 2 ?
+  <ImageCropper image={image}  pos={2}/>:""
+  }
+
+  { whichCrop === 3 ?
+  <ImageCropper image={image}  pos={3}/>
+  :
+  ""
+}
+
+{/* {whichCrop === 1?
+<ChildModal />
+:""
+}            */}
+
+
           </Box>
         </Modal>
       </motion.div>

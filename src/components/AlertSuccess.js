@@ -5,6 +5,7 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { SearchContext } from '../contexts/SearchValue';
 import { useEffect } from 'react';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
 const style = {
   position: 'absolute',
@@ -19,19 +20,23 @@ const style = {
 };
 
 export default function BasicModal(props) {
-  let {successAlert, setSuccessAlert} = React.useContext(SearchContext);
+  let {successAlert, setSuccessAlert,successMsg} = React.useContext(SearchContext);
   const handleOpen = () => setSuccessAlert(true);
   const handleClose = () => setSuccessAlert(false);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setSuccessAlert(false);
-    }, 2000);
+  // useEffect(() => {
+  //   const timer = setTimeout(() => {
+  //     setSuccessAlert(false);
+  //   }, 2000);
 
-    return () => {
-      clearTimeout(timer);
-    };
-  }, []);
+  //   return () => {
+  //     clearTimeout(timer);
+  //   };
+  // }, []);
+
+  setTimeout(() => {
+    handleClose();
+  }, 1800);
 
 
   return (
@@ -43,14 +48,15 @@ export default function BasicModal(props) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-         
-        <Typography color="green" id="modal-modal-title" variant="h3" component="h2">
-        Successful...!
+        
+        <Typography sx={{textAlign:"center"}} color="green" id="modal-modal-title" variant="h3" component="h2">
+        Successful...<CheckCircleIcon sx={{ fontSize: "3rem", mb: 2}}/>
       </Typography>
         
-          <Typography id="modal-modal-description"  variant='h5' sx={{ mt: 2,color:"darkgrey" }}>
-            This alert box is now in testing stage for adding more function
-          </Typography>
+          {/* <Typography id="modal-modal-description"  variant='h5' sx={{ mt: 2,color:"darkgrey" }}>
+            {successMsg} <br></br>Click outside to proceed..?
+          </Typography> */}
+
         </Box>
       </Modal>
     </div>

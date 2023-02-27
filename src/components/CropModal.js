@@ -13,43 +13,58 @@ const style = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: 400,
-  bgcolor: 'background.paper',
+  width: 'auto',
+  bgcolor: '#1f1f1f',
   border: '2px solid #000',
   boxShadow: 24,
   p: 4,
 };
 
-function ImageCropper() {
-  const [image, setImage] = useState(null);
+function ImageCropper( {image,pos} ) {
+
+//   const [image, setImage] = useState(null);
+//   console.log('pppppp',image)
+
   const [editor, setEditor] = useState(null);
-  const [croppedImage, setCroppedImage] = useState(null);
+//   const [croppedImage, setCroppedImage] = useState(null);
   const [zoom, setZoom] = useState(1);
 
-  let {openCrop,setOpenCrop} =useContext(SearchContext)
+  let { croppedImage, setCroppedImage, setOpenCrop, openCrop } = useContext(SearchContext)
 
+  const [open,setOpen]=useState(true)
   // const handleOpen = () => setOpen(true);
-  // const handleClose = () => setOpen(false);
+  const handleClose = () => {
+
+    setOpenCrop(false);
+}
 
 
-  const handleImageChange = e => {
-    if (e.target.files && e.target.files[0]) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        setImage(reader.result);
-      };
-      reader.readAsDataURL(e.target.files[0]);
-    }
-    setOpenCrop(true)
-  };
+//   const handleImageChange = e => {
+//     if (e.target.files && e.target.files[0]) {
+//       const reader = new FileReader();
+//       reader.onload = () => {
+//         setImage(reader.result);
+//       };
+//       reader.readAsDataURL(e.target.files[0]);
+//     }
+//     setOpenCrop(true)
+//   };
 
   const handleCrop = () => {
     if (editor) {
       const canvas = editor.getImageScaledToCanvas();
       const croppedImageUrl = canvas.toDataURL();
-      setCroppedImage(croppedImageUrl);
-      const file = dataURItoBlob(croppedImageUrl);
-      console.log('hhhhhhhhhh',file);
+
+      if ( pos === 1 ){
+        setCroppedImage({...croppedImage,'img1':croppedImageUrl});
+      } else if ( pos === 2 ){     
+        setCroppedImage({...croppedImage,'img2':croppedImageUrl});
+      }else{
+        setCroppedImage({...croppedImage,'img3':croppedImageUrl});
+      }
+      
+    //   const file = dataURItoBlob(croppedImageUrl);
+    //   console.log('hhhhhhhhhh',file);
     }
     setOpenCrop(false)
   };
@@ -71,16 +86,19 @@ function ImageCropper() {
   };
 
   return (
-    <div>
+    // <div>
 
-<div>
+// {/* <div> */}
       <Modal
+        // className="md:w-450"
         open={openCrop}
-        onClose={setOpenCrop(false)}
+        onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
+        <Box sx={style}
+        className="md:w-450"
+        >
           <Typography id="modal-modal-title" variant="h6" component="h2">
             Crop Your Image
           </Typography>
@@ -89,13 +107,13 @@ function ImageCropper() {
           {image && (
         <>
         <AvatarEditor
-        style={{maxHeight:"300px",maxWidth:"300px"}}
+        style={{maxHeight:"300px",maxWidth:"450px"}}
           ref={setEditor}
           image={image}
-          width={600}
-          height={600}
-          border={50}
-          borderRadius={0}
+          width={900}
+          height={650}
+          border={16/9}
+          borderRadius={"76.25%" }
           color={[255, 255, 255, 0.6]} // RGBA
           scale={zoom}
           outputFormat="jpeg"
@@ -124,15 +142,16 @@ function ImageCropper() {
 
         </Box>
       </Modal>
-    </div>
+
+    // </div>
 
 
-      <input type="file" onChange={handleImageChange} />
+    //   {/* <input type="file" onChange={handleImageChange} />    */}
      
 
       
-      {croppedImage && <img width={500} height={500} src={croppedImage} alt="Cropped Image" />}
-    </div>
+    //   {/* {croppedImage && <img width={500} height={500} src={croppedImage} alt="Cropped Image" />} */}
+    // {/* </div> */}
   );
 }
 

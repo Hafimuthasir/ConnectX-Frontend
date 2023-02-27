@@ -36,6 +36,7 @@ export default function BasicModal(props) {
         console.log('looooooooooooooooo',response.data);
         if (response.status === 200){
             alert('success')
+            handleClose()
         }else{
             alert('Something Went Wrong....!')
         }

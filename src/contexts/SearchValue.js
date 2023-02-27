@@ -20,8 +20,10 @@ export default function SearchProvider({ children }) {
   const [ownStory, setOwnStory] = React.useState([]);
   const [ownStoryWatched, setOwnStoryWatched] = React.useState("");
   const [errorMsg, setErrorMsg] = React.useState("");
+  const [successMsg, setSuccessMsg] = React.useState("");
   const [story, setStory] = React.useState([]);
-  const [ispurchased, setIsPurschased] = React.useState(false);
+  const [openCrop, setOpenCrop] = React.useState(true);
+  const [croppedImage, setCroppedImage] = React.useState({});
 
   return (
     <SearchContext.Provider
@@ -48,6 +50,8 @@ export default function SearchProvider({ children }) {
         setPostbool,
         successAlert,
         setSuccessAlert,
+        successMsg,
+        setSuccessMsg,
         errorAlert,
         setErrorAlert,
         errorMsg,
@@ -58,6 +62,10 @@ export default function SearchProvider({ children }) {
         setOwnStoryWatched,
         story,
         setStory,
+        croppedImage,
+        setCroppedImage,
+        openCrop,
+        setOpenCrop
       }}
     >
       {children}

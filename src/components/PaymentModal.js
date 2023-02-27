@@ -44,7 +44,7 @@ export default function BasicModal(props) {
 
  
 
-  const {errorAlert,setErrorAlert,setErrorMsg,setFeedPost,setPostbool} = React.useContext(SearchContext) 
+  const {errorAlert,setErrorAlert,setErrorMsg,setFeedPost,setPostbool,setSuccessAlert} = React.useContext(SearchContext) 
 
   const getFeed = (e) => {
     axios.get("feedPost").then((response) => {
@@ -54,8 +54,6 @@ export default function BasicModal(props) {
   };
 
   const price = props.price * 100
-  console.log('yyyyyyyy',secretKey);
-
   const hiddenPayBt = React.useRef(null);
 
   const handlePayClick =(event)=>{
@@ -71,6 +69,9 @@ export default function BasicModal(props) {
     let details = { postid:props.postid, userid: props.userid };
     axios.post("dummyPurchase", details).then((response) => {
       console.log(response.data);
+      if (response.status === 200){
+        setSuccessAlert(true)
+      }
     });
   };
 
