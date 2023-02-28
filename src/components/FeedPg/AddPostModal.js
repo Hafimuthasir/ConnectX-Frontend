@@ -231,6 +231,7 @@ const handleClearCrop =()=>{
         setImage(reader.result);
       };
       reader.readAsDataURL(e.target.files[0]);
+
       setOpenCrop(true) 
     }
   }else{
@@ -253,8 +254,6 @@ const handleClearCrop =()=>{
   }else {
     setMediaType3(mediatype);
   }
-
-
 
   };
 
@@ -527,17 +526,17 @@ const handleClearCrop =()=>{
             {/* <Button>haaaaaaaaaaai</Button> */}
 
 {
-  whichCrop === 1?
+  whichCrop === 1 && mediaType === "image"?
   <ImageCropper image={image}  pos={1}/>
   :""}
 
 
   {
-  whichCrop === 2 ?
+  whichCrop === 2 && mediaType2 === "image"?
   <ImageCropper image={image}  pos={2}/>:""
   }
 
-  { whichCrop === 3 ?
+  { whichCrop === 3 && mediaType3 === "image"?
   <ImageCropper image={image}  pos={3}/>
   :
   ""

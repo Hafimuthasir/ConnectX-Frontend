@@ -529,7 +529,7 @@ function Post(props) {
                     :
                     <CardMedia
                       id="player" playsinline controls autoPlay muted
-                      sx={{maxHeight:"390px"}}
+                      sx={{maxHeight:"390px",bgcolor:"#0e0e0e"}}
                       component="video"
                       
                       src={data.file}
@@ -555,9 +555,8 @@ function Post(props) {
                     />
                     :
                     <CardMedia
-                      sx={{maxHeight:"390px"}}
+                      sx={{maxHeight:"390px",bgcolor:"#0e0e0e"}}
                       component="video"
-                      loop
                       controls
                       src={data.file2}
                       autoPlay
@@ -581,9 +580,8 @@ function Post(props) {
                     />
                     :
                     <CardMedia
-                      sx={{maxHeight:"390px"}}
+                      sx={{maxHeight:"390px",bgcolor:"#0e0e0e"}}
                       component="video"
-                      loop
                       controls
                       src={data.file3}
                       autoPlay
