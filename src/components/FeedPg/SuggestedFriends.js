@@ -53,7 +53,7 @@ export default function AlignItemsList(props) {
 
   let { setChatcol, setFeedcol, setQnscol, setProfilecol } =
     React.useContext(AppBarContext);
-  let { setChatUser, setShowChat, setFullChat, fullchat, setChatdp } =
+  let { setChatUser, setShowChat, setFullChat,setCurrentRoom, fullchat, setChatdp } =
     React.useContext(SearchContext);
 
   const navigate = useNavigate();
@@ -106,7 +106,7 @@ export default function AlignItemsList(props) {
     }
   }, []);
 
-  const handleChatPage = (second_userid,second_username) => {
+  const handleChatPage = (second_userid,second_username,roomid) => {
     let details = {
       primary_user: user.user_id,
       secondary_user: second_userid,
@@ -120,6 +120,7 @@ export default function AlignItemsList(props) {
       setQnscol("mintcream");
       setChatUser(second_username);
       setShowChat(true);
+      setCurrentRoom(roomid)
       // setChatProfile(dp)
 
       navigate("/home");
@@ -137,8 +138,8 @@ export default function AlignItemsList(props) {
           container
           sx={{
             display: "flex",
-            // justifyContent: "center",
-            // alignItems: "center",
+            justifyContent: "center",
+            alignItems: "center",
             gap: "10px",
             columnGap: "4px",
             rowGap: "9px",
@@ -157,8 +158,10 @@ export default function AlignItemsList(props) {
 
 
 
+{chatlist.length !== 0 ?
 
-       
+
+       <>
         {chatlist.map((obj, index) => {
           let chatusername;
           let chatuserprofile;
@@ -185,7 +188,7 @@ export default function AlignItemsList(props) {
               key={index}
               onClick={() => {
                 handleChatPage(
-                  chatuserid,chatusername
+                  chatuserid,chatusername,roomid
                 );
                 // setSeleChat(chatusername);
               }}
@@ -211,6 +214,15 @@ export default function AlignItemsList(props) {
 
           );
         })}
+
+        </>
+
+        :
+        <Box sx={{mt:"30%",textAlign:"center"}}>
+        <Typography sx={{color:"darkgrey",fontSize:"2rem"}}>No Recent Chats</Typography>
+        <Typography sx={{color:"darkgrey",fontSize:"2rem"}}>Click On a profile to start chat</Typography>
+        </Box>
+}
       
 
 

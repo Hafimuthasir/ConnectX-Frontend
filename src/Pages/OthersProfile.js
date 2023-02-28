@@ -36,7 +36,7 @@ export default function SimpleContainer() {
   const [qnBt, setQnbt] = React.useState("outlined");
   let { setChatcol, setFeedcol, setQnscol, setProfilecol } =
     React.useContext(AppBarContext);
-  let { setChatUser, setShowChat, setFullChat, fullchat, setChatdp } =
+  let { setChatUser, setShowChat, setFullChat, fullchat, setChatdp,setCurrentRoom } =
     React.useContext(SearchContext);
   const navigate = useNavigate();
   const loc = useLocation();
@@ -156,13 +156,16 @@ export default function SimpleContainer() {
     };
     axios.post("chat/getchats", details).then((response) => {
       setFullChat(response.data);
-      console.log("8888888", response.data);
+      console.log("8888888", response.data[0].room);
       setChatcol("#850f0f");
       setFeedcol("mintcream");
       setProfilecol("mintcream");
       setQnscol("mintcream");
       setChatUser(loc.state.username);
       setShowChat(true);
+      setCurrentRoom(response.data[0].room)
+      
+      
       // setChatProfile(dp)
 
       navigate("/home");

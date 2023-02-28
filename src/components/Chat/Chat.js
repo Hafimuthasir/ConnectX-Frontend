@@ -62,9 +62,10 @@ useEffect(() => {
 
         
     // })
+    console.log('fullchaaaaaaa',fullchat);
 
     // socketRef.current = new WebSocket(`ws://localhost:8000/ws/chat/${currentRoom}/${user.user_id}/`);
-    socketRef.current = new WebSocket(`ws://localhost:3000/ws/chat/${currentRoom}/${user.user_id}/`);
+    socketRef.current = new WebSocket(`ws://localhost:8000/ws/chat/${currentRoom}/${user.user_id}/`);
 
     socketRef.current.onmessage = (event) => {
         testdat = JSON.parse(event.data)
@@ -144,6 +145,8 @@ useEffect(() => {
         
         }}
       >
+        {fullchat.length !== 0?
+        <>
         {fullchat.map((obj,index) => {
           if (obj.owner===user.user_id){
             type = "send"
@@ -251,6 +254,10 @@ useEffect(() => {
             </>
           );
         })}
+
+</>:""
+}
+
 
 <div ref={bottomRef} />
 

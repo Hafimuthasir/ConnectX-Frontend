@@ -21,6 +21,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { borderRadius, fontWeight } from '@mui/system';
 import Modal from '@mui/material/Modal';
+import { apibaseUrl } from '../../constants/constants';
 
 const style = {
   position: 'absolute',
@@ -99,14 +100,22 @@ const theme = createTheme();
         formData.append('profile',profile)
         formData.append('bio',bio)
 
-        axios.post('https://grapicscard.ga/api/register',formData).then((response)=>{
+        axios.post(`${apibaseUrl}register`,formData).then((response)=>{
+          console.log('ppppp',response.data)
       if (response.status===200){
         handleOpen()
       }
     }).catch((error)=>{
+      console.log(error);
       let erObj = Object.values(error.response.data)
-      let errorMsg = Object.values(erObj[0])
-      setError(errorMsg[0])
+      // let errorMsg = Object.values(erObj[0])
+      let erMsg = JSON.stringify(erObj)
+      if (erMsg.length > 80){
+        setError(erMsg[79])
+      }else{
+        setError(erMsg)
+      }
+      
     })
   }
     }
@@ -237,7 +246,7 @@ const theme = createTheme();
               <Grid item xs={12}>
               {error ?
       <Alert variant="filled" severity="error">
-       An error occured...!,Please try again&nbsp;&nbsp;{error}
+       Something went wrong...! &nbsp;&nbsp;{error}
       </Alert>:''}
               </Grid>
             </Grid>
