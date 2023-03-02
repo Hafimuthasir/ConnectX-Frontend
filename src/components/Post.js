@@ -524,7 +524,8 @@ function Post(props) {
                       sx={{maxHeight:"390px"}}
                       component='img'
                       src = {data.file}
-                      alt="Paella dish"
+                      // src='https://picsum.photos/500/600'
+                      alt="img not available"
                     />
                     :
                     <CardMedia
@@ -533,6 +534,7 @@ function Post(props) {
                       component="video"
                       
                       src={data.file}
+                      // src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
                     
                       alt="Paella dish"
                     />
