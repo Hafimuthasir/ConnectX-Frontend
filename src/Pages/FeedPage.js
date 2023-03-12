@@ -541,6 +541,7 @@ export default function SimpleContainer() {
                   minHeight: "4rem",
                   paddingTop: "11px",
                   paddingBottom: "10px",
+                  maxHeight:"5rem"
                 }}
                 spacing={2}
               >
