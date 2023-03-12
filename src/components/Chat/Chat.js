@@ -112,11 +112,12 @@ useEffect(() => {
       component="main"
       sx={{
         flexGrow: 1,
-        p: 3,
+        p: 5,
         width: {
           sm: `calc(100% - ${drawerWidth}px)`,
           overflow: "none",
           maxHeight: "100vh",
+        // pb:10
         },
       }}
     >
@@ -126,7 +127,7 @@ useEffect(() => {
         sx={{
           overflowY: "auto",
           height: {
-            xs: "72vh",
+            xs: "65vh",
             sm: "80vh",
             md: "58vh",
             lg: "65vh",

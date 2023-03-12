@@ -202,33 +202,52 @@ export default function SimpleContainer() {
               m: 0.5,
               p: 1,
               backgroundColor: "#303030",
+              // bgcolor:"red",
               boxShadow:
                 "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
             }}
           >
             <Stack direction="row" className="h-16" spacing={2}>
-              {user.profile ? (
-                <Avatar
-                  className="profileresponsive"
-                  sx={{ height: "8em", width: "8em" }}
-                  alt="profile"
-                  src={user.profile}
-                />
-              ) : (
-                <Avatar
-                  className="profileresponsive"
-                  sx={{ height: "8em", width: "8em" }}
-                  alt="Muthasir"
-                />
-              )}
+            <Box sx={{ flexDirection: "column", }}>
+    {user.profile ? (
+      <Avatar
+        className="profileresponsive"
+        sx={{ height: "8em", width: "8em", ml: 10 }}
+        alt="profile"
+        src={user.profile}
+      />
+    ) : (
+      <Avatar
+        className="profileresponsive"
+        sx={{ height: "8em", width: "8em", ml: 10 }}
+        alt="Michael"
+      />
+    )}
+    {/* <Typography sx={{ml: 10 }} variant="h6" align="center">
+      {user.name}
+    </Typography> */}
+    <Box display={{ xs: 'block', sm: 'none' }}>
+    <span style={{ marginLeft:"63%",fonSize: "20rem",color:"darkgrey" }}>{user.name}</span>
+    </Box>
+
+      
+
+  </Box>
 
               <Grid
                 sx={{ display: "flex", alignItems: "center", color: "grey" }}
               >
+                
+                  <Box display={{ xs: 'none', sm: 'block' }} style={{marginTop:"28px"}}>
                 <span style={{ fonSize: "20rem" }}>{user.name}</span>
+                <p style={{ marginTop: "25%" }}>{user.bio}</p>
                 <br></br>
-                <p style={{ marginTop: "25%" }}>{userbio}</p>
+                {/* <span style={{ marginTop: "25%" }}>hellocmdsocods</span> */}
+
                 <br></br>
+                </Box>
+               
+              
                 <Stack
                   sx={{
                     mt: "65%",
@@ -247,8 +266,15 @@ export default function SimpleContainer() {
                   <Button
                     variant="outlined"
                     color="error"
-                    size="medium"
+                    // size="medium"
+                    size={window.innerWidth < 600 ? "small" : "medium"}
                     onClick={logoutHandler}
+                    sx={{
+                      // maxWidth: window.innerWidth < 600 ? "10px" : "auto",
+                      // width: window.innerWidth < 600 ? "100%" : "auto",
+                      // minWidth:window.innerWidth < 600 ? "50px" : "auto",
+                      minWidth:"50px"
+                    }}
                   >
                     Logout
                   </Button>
@@ -291,6 +317,7 @@ export default function SimpleContainer() {
                         onClick={handleBusReq}
                         color="secondary"
                         variant="contained"
+                        size="small"
                       >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -306,7 +333,7 @@ export default function SimpleContainer() {
                             d="M20.25 14.15v4.25c0 1.094-.787 2.036-1.872 2.18-2.087.277-4.216.42-6.378.42s-4.291-.143-6.378-.42c-1.085-.144-1.872-1.086-1.872-2.18v-4.25m16.5 0a2.18 2.18 0 00.75-1.661V8.706c0-1.081-.768-2.015-1.837-2.175a48.114 48.114 0 00-3.413-.387m4.5 8.006c-.194.165-.42.295-.673.38A23.978 23.978 0 0112 15.75c-2.648 0-5.195-.429-7.577-1.22a2.016 2.016 0 01-.673-.38m0 0A2.18 2.18 0 013 12.489V8.706c0-1.081.768-2.015 1.837-2.175a48.111 48.111 0 013.413-.387m7.5 0V5.25A2.25 2.25 0 0013.5 3h-3a2.25 2.25 0 00-2.25 2.25v.894m7.5 0a48.667 48.667 0 00-7.5 0M12 12.75h.008v.008H12v-.008z"
                           />
                         </svg>
-                        &nbsp; Request For Bussiness Account
+                        <span>&nbsp; Request For Bussiness Account</span>
                       </Button>
                     </Popover>
                   </div>
@@ -319,20 +346,22 @@ export default function SimpleContainer() {
 
             <Stack
               direction="colomn"
-              sx={{ gap: "2rem" }}
+
+              sx={{ gap: "2rem",marginRight:"80px" }}
+              // className="pboxresp"
               justifyContent="flex-end"
             >
-              <Stack sx={{ mt: 4, color: "grey", alignItems: "center" }}>
+              <Stack sx={{ mt: 2, color: "grey", alignItems: "center" }}>
                 <span className="text-xs sm:text-lg">Followers</span>
                 <p className="text-xs sm:text-lg">{following.length}</p>
               </Stack>
 
-              <Stack sx={{ mt: 4, color: "grey", alignItems: "center" }}>
+              <Stack sx={{ mt: 2, color: "grey", alignItems: "center" }}>
                 <span className="text-xs sm:text-lg">Following</span>
                 <p className="text-xs sm:text-lg">{followers.length}</p>
               </Stack>
 
-              <Stack sx={{ mt: 4, color: "grey", alignItems: "center" }}>
+              <Stack sx={{ mt: 2, color: "grey", alignItems: "center" }}>
                 <span className="text-xs sm:text-lg">Posts</span>
                 <p className="text-xs sm:text-lg">{posts.length}</p>
               </Stack>
@@ -368,7 +397,7 @@ export default function SimpleContainer() {
                 sx={{ mr: 1 }}
                 onClick={handlePhotobt}
               >
-                Photos/Videos
+                All
               </Button>
               <Button
                 className="w-28 h-10 text-xs sm:w-44 sm:h-10"
