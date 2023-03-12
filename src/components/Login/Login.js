@@ -116,6 +116,55 @@ export default function Login() {
       setError("Invalid Credentials");
     }
   };
+
+
+  const demoLogin = async() => {
+    let email= 'draunovhaunted@gmail.com';
+    let password= '11111111';
+
+    let details = { email, password };
+    let response = await fetch(`${apibaseUrl}token`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify({
+        email: 'dragunovhaunted@gmail.com',
+        password:'11111111'
+      }),
+    });
+
+    // axios.post('token').then((response)=>{
+    //   // data=response.data
+    //   if (response.status == 200){
+    //       setAuthTokens(response.data);
+    //       setUser(jwt_decode(response.data.access));
+    //       localStorage.setItem("authTokens", JSON.stringify(response.data));
+    //       navigate("/home");
+    //   }else{
+    //     setError('Something Went Wrong')
+    //   }
+    //   }
+    // )
+
+    let data = await response.json();
+    let info
+
+    if (response.status === 200) {
+      info = jwt_decode(data.access)
+      if (info.is_verified === true){
+        setAuthTokens(data);
+        setUser(jwt_decode(data.access));
+        localStorage.setItem("authTokens", JSON.stringify(data));
+        navigate("/home");
+      }else{
+        setError('Something Went Wrong')
+      }
+
+  }
+}
+
   return (
     <div className="container">
       <ThemeProvider theme={theme}>
@@ -139,7 +188,7 @@ export default function Login() {
               sx={{ fontSize: "30px" }}
               variant="h5"
             >
-              V e L a R
+              Connect X
             </Typography>
             <Box
               sx={{ color: "white" }}
@@ -208,7 +257,7 @@ export default function Login() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
               >
-                <Button
+                 <Button
                   type="submit"
                   fullWidth
                   variant="contained"
@@ -217,6 +266,21 @@ export default function Login() {
                 >
                   Sign In
                 </Button>
+                <motion.div
+                 animate={{ y: [-10, 10, -10], transition: {duration: 1.5, yoyo: Infinity } }}
+                 whileHover={{ y: 0, transition: { duration: 0.5 } }}
+                >
+                <Button
+                  onClick={()=>demoLogin()}
+                  fullWidth
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2 }}
+                  color="primary"
+                >
+                  * Continue Without Account ( Demo Login )
+                </Button>
+                </motion.div>
+
               </motion.div>
 
               <Grid container>
