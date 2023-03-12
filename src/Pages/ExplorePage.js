@@ -168,7 +168,9 @@ function ExplorePage() {
                 </Stack>
                 <br></br>
 
-                <Stack direction="row" spacing={2}>
+                <Stack direction="row" spacing={2}
+                sx={{maxWidth:"75vw"}}
+                >
                   <TextField
                     size="small"
                     placeholder="Search"
